@@ -15,18 +15,22 @@ import "../styles/global.css";
       <div class="h-screen overflow-hidden col-auto">
         <div class="h-screen w-auto">
           <img
-            src="/20250824.PNG"
+            src="/20250824.webp"
             alt="main-cover"
             class="object-cover object-bottom h-full"
+            loading="eager"
+            decoding="auto"
           />
         </div>
       </div>
       <div class="relative p-4 sm:p-8 w-full">
         <div class="absolute inset-0 top-0 left-0 w-full z-5">
           <img
-            src="/bg-main-3.jpg"
+            src="/bg-main-3.webp"
             alt="bg"
             class="h-full w-full object-cover"
+            loading="lazy"
+            decoding="async"
           />
         </div>
         <div class="relative z-10">
@@ -48,7 +52,7 @@ import "../styles/global.css";
               "Tafsir Hidayatul Qur'an" di Rayon Gresik - Lamongan, kami
               mengundang kehadiran Bapak/Ibu/Saudara/i pada:
             </p>
-            <div class="mt-2 ml-2 flex flex-col gap-y-2">
+            <!-- <div class="mt-2 ml-2 flex flex-col gap-y-2">
               <p>Hari : <span class="font-bold">Ahad</span></p>
               <p>Tanggal : <span class="font-bold">24 Agustus 2025</span></p>
               <p>Waktu : <span class="font-bold">12.00 - 14.30 WIB</span></p>
@@ -64,7 +68,44 @@ import "../styles/global.css";
                 class="px-3 py-1 font-bold text-white rounded bg-sky-700 hover:bg-sky-800 w-fit"
                 >Lihat lokasi</a
               >
-            </div>
+            </div> -->
+            <table class="mt-2 ml-4 w-full">
+              <tbody>
+                <tr>
+                  <td class="w-1/5 sm:w-1/6">Hari</td>
+                  <td>: <span class="font-bold">Ahad</span></td>
+                </tr>
+                <tr class="text-left">
+                  <td>Tanggal</td>
+                  <td>: <span class="font-semibold">24 Agustus 2025</span></td>
+                </tr>
+                <tr class="text-left">
+                  <td>Waktu</td>
+                  <td>: <span class="font-semibold">12.00 - 14.30 WIB</span></td
+                  >
+                </tr>
+                <tr class="text-left">
+                  <td class="flex items-start">Lokasi</td>
+                  <td>
+                    <p>
+                      : <span class="font-semibold"
+                        >Masjid Al-Muhajirin PPI</span
+                      >
+                    </p>
+                    <p class="mb-2 font-semibold">
+                      &nbsp; Jl. Pasir Raya No.16 PPI, Manyar, Gresik
+                    </p>
+                    <a
+                      href="https://maps.app.goo.gl/CVMcsi1vFkcTatCP6"
+                      target="_blank"
+                      class="px-3 py-1 font-bold text-white rounded bg-sky-700 hover:bg-sky-800 w-fit"
+                    >
+                      Lihat lokasi
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
             <p class="mt-2 indent-8">
               InsyaAllah acara ini akan dihadiri oleh
               <span class="font-bold">Dr. KH. M. Afifudin Dimyathi, Lc. MA</span
@@ -102,7 +143,9 @@ import "../styles/global.css";
                   name="nama"
                   required
                   placeholder="Masukkan nama"
-                  class="w-full px-4 py-2 text-gray-900 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                  autocomplete="name"
+                  inputmode="text"
+                  class="w-full px-4 py-2 text-gray-900 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
                 />
               </div>
               <div
@@ -115,12 +158,15 @@ import "../styles/global.css";
                   No. WhatsApp
                 </label>
                 <input
-                  type="text"
+                  type="tel"
                   id="whatsapp"
                   name="whatsapp"
                   required
-                  placeholder="No. WhatsApp"
-                  class="w-full px-4 py-2 text-gray-900 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="08xxxxxxxxxx"
+                  autocomplete="tel"
+                  inputmode="numeric"
+                  pattern="[0-9]*"
+                  class="w-full px-4 py-2 text-gray-900 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
                 />
               </div>
 
@@ -179,14 +225,23 @@ import "../styles/global.css";
   const scriptURL =
     "https://script.google.com/macros/s/AKfycbyjUUG6LIyixwkA_k4QfTd2K4_niFOAQ4NWaV9p4ImS7oRypOxQGD16y3WWWG_rWsvK/exec";
   const form = document.forms["form-hadir"];
-  const submitButton = document.getElementById("submitBtn");
-  const loadingButton = document.getElementById("loadingBtn");
-  const alertContainer = document.getElementById("alertContainer");
+  const submitButton = document.getElementById(
+    "submitBtn"
+  ) as HTMLButtonElement;
+  const loadingButton = document.getElementById(
+    "loadingBtn"
+  ) as HTMLButtonElement;
+  const alertContainer = document.getElementById(
+    "alertContainer"
+  ) as HTMLDivElement;
 
-  // Function to show alert notification
-  function showAlert(message, type) {
-    // Clear previous alerts
-    alertContainer.innerHTML = "";
+  // Function to show alert notification (optimized)
+  function showAlert(message: string, type: string) {
+    // Clear previous alerts efficiently
+    const existingAlerts = alertContainer.querySelectorAll(
+      ".alert-notification"
+    );
+    existingAlerts.forEach((alert) => alert.remove());
 
     const alertDiv = document.createElement("div");
     alertDiv.className = `alert-notification mb-3 p-4 rounded-lg border-l-4 ${
@@ -195,46 +250,38 @@ import "../styles/global.css";
         : "bg-red-50 border-red-400 text-red-800"
     }`;
 
+    // Use simpler HTML structure for better performance
     alertDiv.innerHTML = `
       <div class="flex items-center justify-between">
         <div class="flex items-center">
-          <div class="flex-shrink-0">
-            ${
-              type === "success"
-                ? '<svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>'
-                : '<svg class="w-5 h-5 text-red-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>'
-            }
-          </div>
-          <div class="ml-3">
-            <p class="text-sm font-medium">${message}</p>
-          </div>
+          <span class="mr-3 text-lg">${type === "success" ? "✅" : "❌"}</span>
+          <p class="text-sm font-medium">${message}</p>
         </div>
-        <div class="flex-shrink-0 ml-4">
-          <button 
-            type="button" 
-            class="inline-flex text-gray-400 hover:text-gray-600 focus:outline-none"
-            onclick="this.parentElement.parentElement.parentElement.remove()"
-          >
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-            </svg>
-          </button>
-        </div>
+        <button 
+          type="button" 
+          class="ml-4 text-gray-400 hover:text-gray-600 focus:outline-none text-xl"
+          onclick="this.parentElement.parentElement.remove()"
+        >
+          ×
+        </button>
       </div>
     `;
 
     alertContainer.appendChild(alertDiv);
 
-    // Auto hide after 5 seconds
-    setTimeout(() => {
+    // Auto hide with cleanup
+    const timeoutId = setTimeout(() => {
       if (alertDiv.parentNode) {
         alertDiv.remove();
       }
     }, 5000);
+
+    // Store timeout ID for potential cleanup
+    alertDiv.timeoutId = timeoutId;
   }
 
   // Form submission handler
-  form.addEventListener("submit", function (e) {
+  form.addEventListener("submit", function (e: { preventDefault: () => void }) {
     e.preventDefault();
 
     // Show loading state
@@ -255,13 +302,13 @@ import "../styles/global.css";
           // Success
           form.reset();
           showAlert(
-            "✅ Data kehadiran Anda berhasil terkirim! Terima kasih atas partisipasinya.",
+            "Data kehadiran Anda berhasil terkirim! Terima kasih atas partisipasinya.",
             "success"
           );
         } else {
           // Server error
           showAlert(
-            "❌ Terjadi kesalahan pada server. Mohon coba lagi dalam beberapa saat.",
+            "Terjadi kesalahan pada server. Mohon coba lagi dalam beberapa saat.",
             "error"
           );
         }
@@ -274,14 +321,16 @@ import "../styles/global.css";
         // Network or other error
         console.error("Error!", error);
         showAlert(
-          "❌ Registrasi gagal! Periksa koneksi internet Anda dan coba lagi.",
+          "Registrasi gagal! Periksa koneksi internet Anda dan coba lagi.",
           "error"
         );
       });
   });
 
-  // Countdown Timer
+  // Optimized countdown with reduced frequency on mobile
   var countDown = new Date("August 24, 2025 12:00:00").getTime();
+  var isMobile = window.innerWidth <= 768;
+  var updateInterval = isMobile ? 2000 : 1000; // 2 seconds on mobile, 1 second on desktop
 
   var x = setInterval(function () {
     var now = new Date().getTime();
@@ -294,22 +343,32 @@ import "../styles/global.css";
     var minutes = Math.floor((interval % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((interval % (1000 * 60)) / 1000);
 
-    const hari = document.getElementById("hari");
-    const jam = document.getElementById("jam");
-    const menit = document.getElementById("menit");
-    const detik = document.getElementById("detik");
+    // Batch DOM updates for better performance
+    requestAnimationFrame(() => {
+      const hari = document.getElementById("hari");
+      const jam = document.getElementById("jam");
+      const menit = document.getElementById("menit");
+      const detik = document.getElementById("detik");
 
-    if (hari) hari.innerHTML = days + "";
-    if (jam) jam.innerHTML = hours + "";
-    if (menit) menit.innerHTML = minutes + "";
-    if (detik) detik.innerHTML = seconds + "";
+      if (hari) hari.textContent = days.toString().padStart(2, "0");
+      if (jam) jam.textContent = hours.toString().padStart(2, "0");
+      if (menit) menit.textContent = minutes.toString().padStart(2, "0");
+      if (detik) detik.textContent = seconds.toString().padStart(2, "0");
+    });
 
     if (interval < 0) {
       clearInterval(x);
-      if (hari) hari.innerHTML = "00";
-      if (jam) jam.innerHTML = "00";
-      if (menit) menit.innerHTML = "00";
-      if (detik) detik.innerHTML = "00";
+      requestAnimationFrame(() => {
+        const hari = document.getElementById("hari");
+        const jam = document.getElementById("jam");
+        const menit = document.getElementById("menit");
+        const detik = document.getElementById("detik");
+
+        if (hari) hari.textContent = "00";
+        if (jam) jam.textContent = "00";
+        if (menit) menit.textContent = "00";
+        if (detik) detik.textContent = "00";
+      });
     }
-  }, 1000);
+  }, updateInterval);
 </script>
