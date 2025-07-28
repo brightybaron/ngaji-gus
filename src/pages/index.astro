@@ -1,0 +1,315 @@
+---
+import "../styles/global.css";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body>
+    <main class="flex flex-col sm:flex-row">
+      <div class="h-screen overflow-hidden col-auto">
+        <div class="h-screen w-auto">
+          <img
+            src="/20250824.PNG"
+            alt="main-cover"
+            class="object-cover object-bottom h-full"
+          />
+        </div>
+      </div>
+      <div class="relative p-4 sm:p-8 w-full">
+        <div class="absolute inset-0 top-0 left-0 w-full z-5">
+          <img
+            src="/bg-main-3.jpg"
+            alt="bg"
+            class="h-full w-full object-cover"
+          />
+        </div>
+        <div class="relative z-10">
+          <div class="flex flex-col text-center space-y-2">
+            <h1 class="text-lg sm:text-xl font-medium">
+              Pengajian Rutin Ahad Legi
+            </h1>
+            <p class="text-xl font-bold sm:text-2xl">Tafsir Hidayatul Quran</p>
+            <p class="font-semibold underline">
+              oleh : Dr. KH. M. Afifudin Dimyathi, Lc. MA
+            </p>
+          </div>
+          <div class="w-full sm:w-2/3 mx-auto mt-4 text-sm">
+            <p class="font-semibold text-center text-lg">
+              Assalamualaikum Wr. Wb.
+            </p>
+            <p class="mt-4 text-justify indent-8">
+              Dalam rangka pelaksanaan Istighosah & Pengajian Rutin Ahad Legi
+              "Tafsir Hidayatul Qur'an" di Rayon Gresik - Lamongan, kami
+              mengundang kehadiran Bapak/Ibu/Saudara/i pada:
+            </p>
+            <div class="mt-2 ml-2 flex flex-col gap-y-2">
+              <p>Hari : <span class="font-bold">Ahad</span></p>
+              <p>Tanggal : <span class="font-bold">24 Agustus 2025</span></p>
+              <p>Waktu : <span class="font-bold">12.00 - 14.30 WIB</span></p>
+              <p>
+                Lokasi :
+                <span class="font-bold">
+                  Masjid Al-Muhajirin PPI, Pongangan, Manyar, Gresik, Jawa Timur</span
+                >
+              </p>
+              <a
+                href="https://maps.app.goo.gl/CVMcsi1vFkcTatCP6"
+                target="_blank"
+                class="px-3 py-1 font-bold text-white rounded bg-sky-700 hover:bg-sky-800 w-fit"
+                >Lihat lokasi</a
+              >
+            </div>
+            <p class="mt-2 indent-8">
+              InsyaAllah acara ini akan dihadiri oleh
+              <span class="font-bold">Dr. KH. M. Afifudin Dimyathi, Lc. MA</span
+              >.
+            </p>
+            <p class="mt-2 text-justify indent-8">
+              Kami mengajak Bapak/Ibu/Saudara/i untuk menghadiri dalam kegiatan
+              ini. Semoga mendatangakan keberkahan kepada kita semua. Terima
+              kasih atas perhatiannya.
+            </p>
+            <p class="mt-2">Hormat kami,</p>
+            <p>Panitia</p>
+          </div>
+          <div class="w-full sm:w-2/3 mx-auto mt-6">
+            <p class="mb-2 font-semibold text-gray-900">
+              Mohon mengisi daftar kehadiran
+            </p>
+
+            <!-- Alert Container -->
+            <div id="alertContainer" class="mb-4"></div>
+
+            <form name="form-hadir" action="" class="space-y-2">
+              <div
+                class="flex flex-col sm:flex-row items-start sm:items-center gap-x-2 text-sm"
+              >
+                <label
+                  for="name"
+                  class="block flex-1/6 mb-1 font-medium text-gray-900"
+                >
+                  Nama
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="nama"
+                  required
+                  placeholder="Masukkan nama"
+                  class="w-full px-4 py-2 text-gray-900 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+              <div
+                class="flex flex-col sm:flex-row items-start sm:items-center gap-x-2 text-sm"
+              >
+                <label
+                  for="whatsapp"
+                  class="block flex-1/6 mb-1 font-medium text-gray-900"
+                >
+                  No. WhatsApp
+                </label>
+                <input
+                  type="text"
+                  id="whatsapp"
+                  name="whatsapp"
+                  required
+                  placeholder="No. WhatsApp"
+                  class="w-full px-4 py-2 text-gray-900 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+
+              <!-- Submit Button -->
+              <button
+                type="submit"
+                id="submitBtn"
+                class="px-3 py-1 mt-1 mb-4 font-bold text-white rounded bg-sky-600 btn btn-submit w-fit hover:bg-sky-700"
+              >
+                Kirim
+              </button>
+
+              <!-- Loading Button -->
+              <button
+                type="button"
+                id="loadingBtn"
+                disabled
+                class="hidden items-center px-3 py-1 mt-1 mb-4 font-bold text-gray-300 bg-gray-600 rounded btn-submit w-fit cursor-not-allowed"
+              >
+                <span
+                  class="inline-block w-4 h-4 border-4 rounded-full spinner-border spinner-border-sm border-t-transparent animate-spin mr-2"
+                  role="status"
+                  aria-hidden="true"></span>
+                Mengirim...
+              </button>
+            </form>
+          </div>
+          <div class="mx-auto w-full sm:w-2/3">
+            <p class="mb-4 text-2xl font-medium text-center">Menuju acara</p>
+            <div class="grid grid-cols-4 text-center text-white gap-x-2">
+              <div class="py-2 rounded bg-sky-900">
+                <h3 class="text-xl font-semibold" id="hari"></h3>
+                <p>Hari</p>
+              </div>
+              <div class="py-2 rounded bg-sky-900">
+                <h3 class="text-xl font-semibold" id="jam"></h3>
+                <p>Jam</p>
+              </div>
+              <div class="py-2 rounded bg-sky-900">
+                <h3 class="text-xl font-semibold" id="menit"></h3>
+                <p>Menit</p>
+              </div>
+              <div class="py-2 rounded bg-sky-900">
+                <h3 class="text-xl font-semibold" id="detik"></h3>
+                <p>Detik</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
+
+<script>
+  const scriptURL =
+    "https://script.google.com/macros/s/AKfycbyjUUG6LIyixwkA_k4QfTd2K4_niFOAQ4NWaV9p4ImS7oRypOxQGD16y3WWWG_rWsvK/exec";
+  const form = document.forms["form-hadir"];
+  const submitButton = document.getElementById("submitBtn");
+  const loadingButton = document.getElementById("loadingBtn");
+  const alertContainer = document.getElementById("alertContainer");
+
+  // Function to show alert notification
+  function showAlert(message, type) {
+    // Clear previous alerts
+    alertContainer.innerHTML = "";
+
+    const alertDiv = document.createElement("div");
+    alertDiv.className = `alert-notification mb-3 p-4 rounded-lg border-l-4 ${
+      type === "success"
+        ? "bg-green-50 border-green-400 text-green-800"
+        : "bg-red-50 border-red-400 text-red-800"
+    }`;
+
+    alertDiv.innerHTML = `
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            ${
+              type === "success"
+                ? '<svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>'
+                : '<svg class="w-5 h-5 text-red-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>'
+            }
+          </div>
+          <div class="ml-3">
+            <p class="text-sm font-medium">${message}</p>
+          </div>
+        </div>
+        <div class="flex-shrink-0 ml-4">
+          <button 
+            type="button" 
+            class="inline-flex text-gray-400 hover:text-gray-600 focus:outline-none"
+            onclick="this.parentElement.parentElement.parentElement.remove()"
+          >
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    `;
+
+    alertContainer.appendChild(alertDiv);
+
+    // Auto hide after 5 seconds
+    setTimeout(() => {
+      if (alertDiv.parentNode) {
+        alertDiv.remove();
+      }
+    }, 5000);
+  }
+
+  // Form submission handler
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    // Show loading state
+    submitButton.style.display = "none";
+    loadingButton.style.display = "flex";
+
+    // Submit form data
+    fetch(scriptURL, {
+      method: "POST",
+      body: new FormData(form),
+    })
+      .then((response) => {
+        // Hide loading state
+        submitButton.style.display = "block";
+        loadingButton.style.display = "none";
+
+        if (response.ok) {
+          // Success
+          form.reset();
+          showAlert(
+            "✅ Data kehadiran Anda berhasil terkirim! Terima kasih atas partisipasinya.",
+            "success"
+          );
+        } else {
+          // Server error
+          showAlert(
+            "❌ Terjadi kesalahan pada server. Mohon coba lagi dalam beberapa saat.",
+            "error"
+          );
+        }
+      })
+      .catch((error) => {
+        // Hide loading state
+        submitButton.style.display = "block";
+        loadingButton.style.display = "none";
+
+        // Network or other error
+        console.error("Error!", error);
+        showAlert(
+          "❌ Registrasi gagal! Periksa koneksi internet Anda dan coba lagi.",
+          "error"
+        );
+      });
+  });
+
+  // Countdown Timer
+  var countDown = new Date("August 24, 2025 12:00:00").getTime();
+
+  var x = setInterval(function () {
+    var now = new Date().getTime();
+    var interval = countDown - now;
+
+    var days = Math.floor(interval / (1000 * 60 * 60 * 24));
+    var hours = Math.floor(
+      (interval % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+    );
+    var minutes = Math.floor((interval % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((interval % (1000 * 60)) / 1000);
+
+    const hari = document.getElementById("hari");
+    const jam = document.getElementById("jam");
+    const menit = document.getElementById("menit");
+    const detik = document.getElementById("detik");
+
+    if (hari) hari.innerHTML = days + "";
+    if (jam) jam.innerHTML = hours + "";
+    if (menit) menit.innerHTML = minutes + "";
+    if (detik) detik.innerHTML = seconds + "";
+
+    if (interval < 0) {
+      clearInterval(x);
+      if (hari) hari.innerHTML = "00";
+      if (jam) jam.innerHTML = "00";
+      if (menit) menit.innerHTML = "00";
+      if (detik) detik.innerHTML = "00";
+    }
+  }, 1000);
+</script>
